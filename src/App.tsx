@@ -1,8 +1,13 @@
+import { useState } from "react";
 import FlexView from "react-flexview/lib";
+import { Board } from "./components/Board";
 import { Header } from "./components/Header";
-import { Homepage } from "./components/Homepage";
 
-function App() {
+import { createStore } from "./store/store";
+
+export const App: React.FC = () => {
+  const [store] = useState(() => createStore());
+
   return (
     <div>
       <Header />
@@ -12,10 +17,10 @@ function App() {
           marginRight: "10em",
         }}
       >
-        <Homepage />
+        <Board store={store} />
       </FlexView>
     </div>
   );
-}
+};
 
 export default App;

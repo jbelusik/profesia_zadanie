@@ -1,4 +1,5 @@
-import { idProp, model, Model, prop } from "mobx-keystone";
+import { idProp, model, Model, modelAction, prop } from "mobx-keystone";
+import { boardsApi } from "../api/boardsApi";
 
 @model("Item")
 export class Item extends Model({
@@ -24,7 +25,14 @@ export class Board extends Model({
 export class Boards extends Model({
   boards: prop<Board[]>(),
   loaded: prop<false>(),
-}) {}
+}) {
+  @modelAction
+  load() {
+    boardsApi.get().then((data) => {
+      console.log(data);
+    });
+  }
+}
 
 export const createStore = (): Boards => {
   return new Boards({

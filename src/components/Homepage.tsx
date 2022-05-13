@@ -1,8 +1,14 @@
 import { Button, Stack, Typography } from "@mui/material";
 import FlexView from "react-flexview/lib";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import { Boards } from "../store/store";
 
-export const Homepage: React.FC = () => {
+interface IHomepageProps {
+  store: Boards;
+}
+
+export const Homepage: React.FC<IHomepageProps> = ({ store }) => {
+  store.load();
   return (
     <FlexView column>
       <Typography variant="h3" paddingY={"0.3em"} fontWeight={"600"}>
@@ -25,7 +31,7 @@ export const Homepage: React.FC = () => {
   );
 };
 
-const BoardButton: React.FC = () => {
+export const BoardButton: React.FC = () => {
   return (
     <Button
       variant="contained"
