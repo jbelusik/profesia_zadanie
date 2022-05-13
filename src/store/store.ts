@@ -1,5 +1,5 @@
-import { idProp, model, Model, modelAction, prop } from "mobx-keystone";
-import { boardsApi } from "../api/boardsApi";
+import { idProp, model, Model, modelFlow, prop, _async } from "mobx-keystone";
+import { boardsApi, IBoardsResponse } from "../api/boardsApi";
 
 @model("Item")
 export class Item extends Model({
@@ -24,14 +24,35 @@ export class Board extends Model({
 @model("Boards")
 export class Boards extends Model({
   boards: prop<Board[]>(),
-  loaded: prop<false>(),
+  loaded: prop<boolean>(false),
 }) {
-  @modelAction
-  load() {
-    boardsApi.get().then((data) => {
-      console.log(data);
+  @modelFlow
+  load = _async(function* (this: Boards) {
+    if (this.loaded) {
+      return;
+    }
+
+    const data: IBoardsResponse = yield boardsApi.get();
+    this.boards = data.boards.map((board) => {
+      return new Board({
+        name: board.name,
+        id: board.id,
+        lists: board.lists?.map((list) => {
+          return new List({
+            name: list.name,
+            id: list.id,
+            items: list.items.map((item) => {
+              return new Item({
+                id: item.id,
+                name: item.name,
+              });
+            }),
+          });
+        }),
+      });
     });
-  }
+    this.loaded = true;
+  });
 }
 
 export const createStore = (): Boards => {

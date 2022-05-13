@@ -25,7 +25,7 @@ const url = "http://localhost:3001/boards";
 
 export const boardsApi = {
   get: async (): Promise<IBoardsResponse> => {
-    return await axios.get(url);
+    return (await axios.get(url)).data;
   },
   put: async (): Promise<void> => {
     return await axios.put(url);

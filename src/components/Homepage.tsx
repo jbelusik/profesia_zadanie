@@ -2,13 +2,15 @@ import { Button, Stack, Typography } from "@mui/material";
 import FlexView from "react-flexview/lib";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import { Boards } from "../store/store";
+import { observer } from "mobx-react";
 
 interface IHomepageProps {
   store: Boards;
 }
 
-export const Homepage: React.FC<IHomepageProps> = ({ store }) => {
+export const Homepage: React.FC<IHomepageProps> = observer(({ store }) => {
   store.load();
+
   return (
     <FlexView column>
       <Typography variant="h3" paddingY={"0.3em"} fontWeight={"600"}>
@@ -16,22 +18,22 @@ export const Homepage: React.FC<IHomepageProps> = ({ store }) => {
       </Typography>
       <Stack direction={"row"} spacing={2}>
         <FlexView wrap>
-          <BoardButton />
-
-          <BoardButton />
-
-          <BoardButton />
-
-          <BoardButton />
+          {store.boards.map((board) => {
+            return <BoardButton name={board.name} />;
+          })}
 
           <PlusButton />
         </FlexView>
       </Stack>
     </FlexView>
   );
-};
+});
 
-export const BoardButton: React.FC = () => {
+interface IBoardsButton {
+  name: string;
+}
+
+export const BoardButton: React.FC<IBoardsButton> = ({ name }) => {
   return (
     <Button
       variant="contained"
@@ -45,7 +47,7 @@ export const BoardButton: React.FC = () => {
         margin: "5px",
       }}
     >
-      Prvý board
+      {name}
     </Button>
   );
 };

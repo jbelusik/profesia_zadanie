@@ -1,11 +1,13 @@
 import { useState } from "react";
 import FlexView from "react-flexview/lib";
-import { Board } from "./components/Board";
+import { observer } from "mobx-react";
+
 import { Header } from "./components/Header";
+import { Homepage } from "./components/Homepage";
 
 import { createStore } from "./store/store";
 
-export const App: React.FC = () => {
+export const App: React.FC = observer(() => {
   const [store] = useState(() => createStore());
 
   return (
@@ -17,10 +19,10 @@ export const App: React.FC = () => {
           marginRight: "10em",
         }}
       >
-        <Board store={store} />
+        <Homepage store={store} />
       </FlexView>
     </div>
   );
-};
+});
 
 export default App;
