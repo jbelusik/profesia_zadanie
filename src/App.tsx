@@ -8,9 +8,17 @@ import { Homepage } from "./components/Homepage";
 import { createStore } from "./store/store";
 import { Route, Routes } from "react-router-dom";
 import { Board } from "./components/Board";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 export const App: React.FC = observer(() => {
   const [store] = useState(() => createStore());
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: "rgb(0, 209,178)",
+      },
+    },
+  });
 
   return (
     <div>
@@ -21,10 +29,12 @@ export const App: React.FC = observer(() => {
           marginRight: "10em",
         }}
       >
-        <Routes>
-          <Route path="/" element={<Homepage store={store} />} />
-          <Route path="/boards/:boardId" element={<Board store={store} />} />
-        </Routes>
+        <ThemeProvider theme={theme}>
+          <Routes>
+            <Route path="/" element={<Homepage store={store} />} />
+            <Route path="/boards/:boardId" element={<Board store={store} />} />
+          </Routes>
+        </ThemeProvider>
       </FlexView>
     </div>
   );

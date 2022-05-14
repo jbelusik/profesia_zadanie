@@ -1,11 +1,12 @@
 import { Stack, Typography } from "@mui/material";
 import FlexView from "react-flexview/lib";
 import { useParams } from "react-router-dom";
-import { Boards } from "../store/store";
+import { BoardsModel } from "../store/store";
+import { AddField } from "./AddField";
 import { BoardList } from "./BoardList";
 
 interface IHomepageProps {
-  store: Boards;
+  store: BoardsModel;
 }
 
 export const Board: React.FC<IHomepageProps> = ({ store }) => {
@@ -19,13 +20,14 @@ export const Board: React.FC<IHomepageProps> = ({ store }) => {
       <Typography variant="h3" paddingY={"0.3em"} fontWeight={"600"}>
         {boardModel?.name}
       </Typography>
-      <Stack direction={"row"} spacing={2}>
-        <FlexView wrap>
+      <FlexView wrap>
+        <Stack direction={"row"} spacing={2}>
           {boardModel?.lists.map((list) => (
-            <BoardList name={list.name} items={list.items} />
+            <BoardList name={list.name} items={list.items} store={store} />
           ))}
-        </FlexView>
-      </Stack>
+        </Stack>
+        <AddField onBlur={(name) => {}} />
+      </FlexView>
     </FlexView>
   );
 };

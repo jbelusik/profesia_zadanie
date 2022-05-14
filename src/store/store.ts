@@ -11,32 +11,32 @@ import {
 import { boardsApi, IBoardsResponse } from "../api/boardsApi";
 
 @model("Item")
-export class Item extends Model({
+export class ItemModel extends Model({
   id: prop<string>(),
   name: prop<string>(),
 }) {}
 
 @model("List")
-export class List extends Model({
+export class ListModel extends Model({
   id: prop<string>(),
   name: prop<string>(),
-  items: prop<Item[]>(),
+  items: prop<ItemModel[]>(),
 }) {}
 
 @model("Board")
-export class Board extends Model({
+export class BoardModel extends Model({
   id: prop<string>(),
   name: prop<string>(),
-  lists: prop<List[]>(),
+  lists: prop<ListModel[]>(),
 }) {}
 
 @model("Boards")
-export class Boards extends Model({
-  boards: tProp(types.array(types.model(Board))),
+export class BoardsModel extends Model({
+  boards: tProp(types.array(types.model(BoardModel))),
   loaded: tProp(types.boolean, false),
 }) {
   @modelFlow
-  load = _async(function* (this: Boards) {
+  load = _async(function* (this: BoardsModel) {
     console.log("laod");
     if (this.loaded) {
       return;
@@ -44,15 +44,15 @@ export class Boards extends Model({
 
     const data: IBoardsResponse = yield boardsApi.get();
     this.boards = data.boards.map((board) => {
-      return new Board({
+      return new BoardModel({
         name: board.name,
         id: board.id,
         lists: board.lists?.map((list) => {
-          return new List({
+          return new ListModel({
             name: list.name,
             id: list.id,
             items: list.items.map((item) => {
-              return new Item({
+              return new ItemModel({
                 id: item.id,
                 name: item.name,
               });
@@ -65,19 +65,19 @@ export class Boards extends Model({
   });
 
   @modelAction
-  add(board: Board) {
+  add(board: BoardModel) {
     this.boards.push(board);
   }
 
   @modelFlow
-  save = _async(function* (this: Boards, name: string) {
+  save = _async(function* (this: BoardsModel, name: string) {
     yield boardsApi.post(name);
     this.loaded = false;
   });
 }
 
-export const createStore = (): Boards => {
-  return new Boards({
+export const createStore = (): BoardsModel => {
+  return new BoardsModel({
     boards: [],
     loaded: false,
   });

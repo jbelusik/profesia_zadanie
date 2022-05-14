@@ -1,14 +1,15 @@
-import { Button, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import FlexView from "react-flexview/lib";
-import AddCircleIcon from "@mui/icons-material/AddCircle";
-import { Item } from "../store/store";
+import { BoardsModel, ItemModel } from "../store/store";
+import { AddField } from "./AddField";
 
 interface IBoardList {
   name: string;
-  items: Item[];
+  items: ItemModel[];
+  store: BoardsModel;
 }
 
-export const BoardList: React.FC<IBoardList> = ({ name, items }) => {
+export const BoardList: React.FC<IBoardList> = ({ name, items, store }) => {
   return (
     <FlexView
       column
@@ -20,8 +21,7 @@ export const BoardList: React.FC<IBoardList> = ({ name, items }) => {
       {items.map((item) => (
         <ListItem name={item.name} />
       ))}
-
-      <ListPlusButton />
+      <AddField onBlur={(name) => {}} />
     </FlexView>
   );
 };
@@ -32,36 +32,18 @@ interface IListItem {
 
 export const ListItem: React.FC<IListItem> = ({ name }) => {
   return (
-    <Button
-      variant="contained"
+    <div
       style={{
-        padding: "0.5em",
-        color: "black",
-        fontWeight: "600",
+        fontWeight: "700",
         backgroundColor: "rgb(0, 209,178)",
-        width: "300px",
-        minWidth: "300px",
-        margin: "5px",
+        width: "18em",
+        height: "1.5em",
+        margin: "0.3em",
+        padding: "1em",
+        borderRadius: "10px",
       }}
     >
       {name}
-    </Button>
-  );
-};
-
-const ListPlusButton: React.FC = () => {
-  return (
-    <Button
-      variant="outlined"
-      style={{
-        padding: "0.5em",
-        color: "rgb(0, 209,178)",
-        fontWeight: "600",
-        backgroundColor: "white",
-        width: "300px",
-        margin: "5px",
-      }}
-      startIcon={<AddCircleIcon />}
-    />
+    </div>
   );
 };
