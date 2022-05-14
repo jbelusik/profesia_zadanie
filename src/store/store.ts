@@ -1,33 +1,44 @@
-import { idProp, model, Model, modelFlow, prop, _async } from "mobx-keystone";
+import {
+  model,
+  Model,
+  modelAction,
+  modelFlow,
+  prop,
+  tProp,
+  types,
+  _async,
+  _await,
+} from "mobx-keystone";
 import { boardsApi, IBoardsResponse } from "../api/boardsApi";
 
 @model("Item")
 export class Item extends Model({
-  id: idProp,
+  id: prop<string>(),
   name: prop<string>(),
 }) {}
 
 @model("List")
 export class List extends Model({
-  id: idProp,
+  id: prop<string>(),
   name: prop<string>(),
   items: prop<Item[]>(),
 }) {}
 
 @model("Board")
 export class Board extends Model({
-  id: idProp,
+  id: prop<string>(),
   name: prop<string>(),
   lists: prop<List[]>(),
 }) {}
 
 @model("Boards")
 export class Boards extends Model({
-  boards: prop<Board[]>(),
-  loaded: prop<boolean>(false),
+  boards: tProp(types.array(types.model(Board))),
+  loaded: tProp(types.boolean, false),
 }) {
   @modelFlow
   load = _async(function* (this: Boards) {
+    console.log("laod");
     if (this.loaded) {
       return;
     }
@@ -52,6 +63,17 @@ export class Boards extends Model({
       });
     });
     this.loaded = true;
+  });
+
+  @modelAction
+  add(board: Board) {
+    this.boards.push(board);
+  }
+
+  @modelFlow
+  save = _async(function* (this: Boards, name: string) {
+    yield* _await(boardsApi.post(name));
+    this.loaded = false;
   });
 }
 

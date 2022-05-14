@@ -27,7 +27,7 @@ export const boardsApi = {
   get: async (): Promise<IBoardsResponse> => {
     return (await axios.get(url)).data;
   },
-  put: async (): Promise<void> => {
-    return await axios.put(url);
+  post: async (name: string): Promise<string> => {
+    return await axios.post(url, { name });
   },
 };
