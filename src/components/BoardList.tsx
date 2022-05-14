@@ -1,25 +1,36 @@
 import { Button, Typography } from "@mui/material";
 import FlexView from "react-flexview/lib";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
+import { Item } from "../store/store";
 
-export const BoardList: React.FC = () => {
+interface IBoardList {
+  name: string;
+  items: Item[];
+}
+
+export const BoardList: React.FC<IBoardList> = ({ name, items }) => {
   return (
     <FlexView
       column
       style={{ backgroundColor: "white", margin: "0.5em", padding: "0.5em" }}
     >
       <Typography variant="h4" paddingY={"0.3em"} fontWeight={"600"}>
-        Meno boardu
+        {name}
       </Typography>
-      <ListButton />
-      <ListButton />
-      <ListButton />
+      {items.map((item) => (
+        <ListItem name={item.name} />
+      ))}
+
       <ListPlusButton />
     </FlexView>
   );
 };
 
-export const ListButton: React.FC = () => {
+interface IListItem {
+  name: string;
+}
+
+export const ListItem: React.FC<IListItem> = ({ name }) => {
   return (
     <Button
       variant="contained"
@@ -33,7 +44,7 @@ export const ListButton: React.FC = () => {
         margin: "5px",
       }}
     >
-      Urobiť zadanie
+      {name}
     </Button>
   );
 };
