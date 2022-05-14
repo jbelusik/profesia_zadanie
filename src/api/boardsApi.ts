@@ -27,7 +27,19 @@ export const boardsApi = {
   get: async (): Promise<IBoardsResponse> => {
     return (await axios.get(url)).data;
   },
-  post: async (name: string): Promise<string> => {
-    return await axios.post(url, { name });
+  postBoard: async (name: string): Promise<string> => {
+    return (await axios.post(url, { name })).data;
+  },
+  postList: async (boardId: string, name: string): Promise<string> => {
+    return (await axios.post(`${url}/${boardId}/lists`, { name })).data;
+  },
+  postItem: async (
+    boardId: string,
+    listId: string,
+    name: string
+  ): Promise<string> => {
+    return (
+      await axios.post(`${url}/${boardId}/lists/${listId}/items`, { name })
+    ).data;
   },
 };

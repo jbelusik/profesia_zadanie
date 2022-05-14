@@ -3,11 +3,11 @@ import FlexView from "react-flexview/lib";
 import { observer } from "mobx-react";
 
 import { Header } from "./components/Header";
-import { Homepage } from "./components/Homepage";
+import { Homepage } from "./store/routes/Homepage";
 
 import { createStore } from "./store/store";
 import { Route, Routes } from "react-router-dom";
-import { Board } from "./components/Board";
+import { Board } from "./store/routes/Board";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 export const App: React.FC = observer(() => {

@@ -1,9 +1,10 @@
-import { Stack, Typography } from "@mui/material";
+import { Stack } from "@mui/material";
 import { observer } from "mobx-react";
 import FlexView from "react-flexview/lib";
 import { useNavigate } from "react-router-dom";
-import { BoardsModel } from "../store/store";
-import { AddField } from "./AddField";
+import { AddField } from "../../components/AddField";
+import { BoardsModel } from "../store";
+import { Title } from "../../components/Title";
 
 interface IHomepageProps {
   store: BoardsModel;
@@ -14,9 +15,7 @@ export const Homepage: React.FC<IHomepageProps> = observer(({ store }) => {
 
   return (
     <FlexView column>
-      <Typography variant="h3" paddingY={"0.3em"} fontWeight={"600"}>
-        Homepage
-      </Typography>
+      <Title text={"Homepage"} />
       <Stack direction={"row"} spacing={2}>
         <FlexView wrap>
           {store.boards.map((board) => {
@@ -24,7 +23,7 @@ export const Homepage: React.FC<IHomepageProps> = observer(({ store }) => {
           })}
           <AddField
             onBlur={(name) => {
-              store.save(name);
+              store.addBoard(name);
             }}
           />
         </FlexView>

@@ -1,30 +1,36 @@
 import { Typography } from "@mui/material";
+import { observer } from "mobx-react";
 import FlexView from "react-flexview/lib";
-import { BoardsModel, ItemModel } from "../store/store";
+import { ListModel } from "../store/store";
 import { AddField } from "./AddField";
 
 interface IBoardList {
-  name: string;
-  items: ItemModel[];
-  store: BoardsModel;
+  listModel: ListModel;
+  boardId: string;
 }
 
-export const BoardList: React.FC<IBoardList> = ({ name, items, store }) => {
-  return (
-    <FlexView
-      column
-      style={{ backgroundColor: "white", margin: "0.5em", padding: "0.5em" }}
-    >
-      <Typography variant="h4" paddingY={"0.3em"} fontWeight={"600"}>
-        {name}
-      </Typography>
-      {items.map((item) => (
-        <ListItem name={item.name} />
-      ))}
-      <AddField onBlur={(name) => {}} />
-    </FlexView>
-  );
-};
+export const BoardList: React.FC<IBoardList> = observer(
+  ({ listModel, boardId }) => {
+    return (
+      <FlexView
+        column
+        style={{ backgroundColor: "white", margin: "0.5em", padding: "0.5em" }}
+      >
+        <Typography variant="h4" paddingY={"0.3em"} fontWeight={"600"}>
+          {listModel.name}
+        </Typography>
+        {listModel.items.map((item) => (
+          <ListItem name={item.name} />
+        ))}
+        <AddField
+          onBlur={(name) => {
+            listModel.addItem(boardId, name);
+          }}
+        />
+      </FlexView>
+    );
+  }
+);
 
 interface IListItem {
   name: string;

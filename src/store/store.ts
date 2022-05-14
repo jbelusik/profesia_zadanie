@@ -1,7 +1,6 @@
 import {
   model,
   Model,
-  modelAction,
   modelFlow,
   prop,
   tProp,
@@ -21,14 +20,39 @@ export class ListModel extends Model({
   id: prop<string>(),
   name: prop<string>(),
   items: prop<ItemModel[]>(),
-}) {}
+}) {
+  @modelFlow
+  addItem = _async(function* (this: ListModel, boardId: string, name: string) {
+    const id = yield boardsApi.postItem(boardId, this.id, name);
+
+    this.items.push(
+      new ItemModel({
+        id,
+        name,
+      })
+    );
+  });
+}
 
 @model("Board")
 export class BoardModel extends Model({
   id: prop<string>(),
   name: prop<string>(),
   lists: prop<ListModel[]>(),
-}) {}
+}) {
+  @modelFlow
+  addList = _async(function* (this: BoardModel, name: string) {
+    const id = yield boardsApi.postList(this.id, name);
+
+    this.lists.push(
+      new ListModel({
+        id,
+        name,
+        items: [],
+      })
+    );
+  });
+}
 
 @model("Boards")
 export class BoardsModel extends Model({
@@ -37,7 +61,6 @@ export class BoardsModel extends Model({
 }) {
   @modelFlow
   load = _async(function* (this: BoardsModel) {
-    console.log("laod");
     if (this.loaded) {
       return;
     }
@@ -64,15 +87,17 @@ export class BoardsModel extends Model({
     this.loaded = true;
   });
 
-  @modelAction
-  add(board: BoardModel) {
-    this.boards.push(board);
-  }
-
   @modelFlow
-  save = _async(function* (this: BoardsModel, name: string) {
-    yield boardsApi.post(name);
-    this.loaded = false;
+  addBoard = _async(function* (this: BoardsModel, name: string) {
+    const id = yield boardsApi.postBoard(name);
+
+    this.boards.push(
+      new BoardModel({
+        id,
+        name,
+        lists: [],
+      })
+    );
   });
 }
 
