@@ -6,6 +6,8 @@ import { Header } from "./components/Header";
 import { Homepage } from "./components/Homepage";
 
 import { createStore } from "./store/store";
+import { Route, Routes } from "react-router-dom";
+import { Board } from "./components/Board";
 
 export const App: React.FC = observer(() => {
   const [store] = useState(() => createStore());
@@ -19,7 +21,10 @@ export const App: React.FC = observer(() => {
           marginRight: "10em",
         }}
       >
-        <Homepage store={store} />
+        <Routes>
+          <Route path="/" element={<Homepage store={store} />} />
+          <Route path="/boards/:boardId" element={<Board store={store} />} />
+        </Routes>
       </FlexView>
     </div>
   );

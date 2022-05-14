@@ -7,7 +7,6 @@ import {
   tProp,
   types,
   _async,
-  _await,
 } from "mobx-keystone";
 import { boardsApi, IBoardsResponse } from "../api/boardsApi";
 
@@ -72,7 +71,7 @@ export class Boards extends Model({
 
   @modelFlow
   save = _async(function* (this: Boards, name: string) {
-    yield* _await(boardsApi.post(name));
+    yield boardsApi.post(name);
     this.loaded = false;
   });
 }

@@ -1,8 +1,9 @@
-import { Stack, TextField, Typography } from "@mui/material";
+import { Container, Stack, TextField, Typography } from "@mui/material";
 import { observer } from "mobx-react";
 import { useState } from "react";
 import FlexView from "react-flexview/lib";
 import { Boards } from "../store/store";
+import { useNavigate } from "react-router-dom";
 
 interface IHomepageProps {
   store: Boards;
@@ -19,7 +20,7 @@ export const Homepage: React.FC<IHomepageProps> = observer(({ store }) => {
       <Stack direction={"row"} spacing={2}>
         <FlexView wrap>
           {store.boards.map((board) => {
-            return <BoardPreview name={board.name} />;
+            return <BoardPreview name={board.name} id={board.id} />;
           })}
 
           <PlusButton store={store} />
@@ -31,24 +32,32 @@ export const Homepage: React.FC<IHomepageProps> = observer(({ store }) => {
 
 interface IBoardsButton {
   name: string;
+  id: string;
 }
 
-export const BoardPreview: React.FC<IBoardsButton> = ({ name }) => {
+export const BoardPreview: React.FC<IBoardsButton> = ({ name, id }) => {
+  const navigate = useNavigate();
+
   return (
-    <TextField
-      variant="outlined"
+    <div
       style={{
         // padding: "1em",
         // color: "red",
-        fontWeight: "600",
+        fontWeight: "700",
         backgroundColor: "rgb(0, 209,178)",
         width: "300px",
+        height: "1.5em",
         minWidth: "300px",
-        margin: "5px",
-        pointerEvents: "none",
+        margin: "0.3em",
+        padding: "1em",
+        borderRadius: "5px",
       }}
-      value={name}
-    />
+      onClick={() => {
+        navigate(`/boards/${id}`);
+      }}
+    >
+      {name}
+    </div>
   );
 };
 
