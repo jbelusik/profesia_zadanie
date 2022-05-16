@@ -14,7 +14,12 @@ export const BoardList: React.FC<IBoardList> = observer(
     return (
       <FlexView
         column
-        style={{ backgroundColor: "white", margin: "0.5em", padding: "0.5em" }}
+        style={{
+          backgroundColor: "white",
+          margin: "0.5em",
+          padding: "0.5em",
+          borderRadius: "10px",
+        }}
       >
         <Typography variant="h4" paddingY={"0.3em"} fontWeight={"600"}>
           {listModel.name}
