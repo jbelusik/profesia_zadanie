@@ -2,9 +2,9 @@ import { Stack } from "@mui/material";
 import { observer } from "mobx-react";
 import FlexView from "react-flexview/lib";
 import { useNavigate } from "react-router-dom";
-import { AddField } from "../../components/AddField";
-import { BoardsModel } from "../store";
-import { Title } from "../../components/Title";
+import { AddField } from "../components/AddField";
+import { BoardsModel } from "../store/store";
+import { Title } from "../components/Title";
 
 interface IHomepageProps {
   store: BoardsModel;
