@@ -1,46 +1,64 @@
-# Getting Started with Create React App
+# Webová aplikácia, ktorá nie je nepodobná Trellu
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Úlohou je vytvoriť webovú aplikáciu, v ktorej bude možné vytvárať tabule so zoznamami položiek.
 
-## Available Scripts
+**Board (tabuľa)**
 
-In the project directory, you can run:
+Združuje zozamy položiek.
 
-### `npm start`
+- má unikátne id
+- má svoj názov (nemusí byť unikátny)
+- obsahuje pole zoznamov (môže byť prázdne)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+**List (zoznam)**
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Združuje položky.
 
-### `npm test`
+- má unikátne id
+- má svoj názov (nemusí byť unikátny)
+- patrí práve do jedného boardu
+- obsahuje pole položiek
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+**item (položka)**
 
-### `npm run build`
+Patrí do zoznamu.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- má unikátne id
+- má svoj názov (nemusí byť unikátny)
+- patrí práve do jedného zoznamu
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Požiadavky
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+S pomocou reaktívneho frameworku - buď Vue.js, alebo React treba vytvoriť javascriptovú aplikáciu pozostávajúcu z dvoch stránok:
+- zoznam boardov
+- detail boardu
 
-### `npm run eject`
+Na stránke so zoznamom boardov si viem vytvoriť nový prázdny board, pričom zadávam iba jeho názov.
+Na stránke s detailom boardu vidím v stĺpcoch usporiadané zoznamy položiek, viem si tam vytvoriť nový zoznam
+a viem si vytvoriť novú položku do hociktorého zoznamu.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Nie je potrebné riešiť editáciu a ani mazanie položiek.
+Nepotrebujeme ani detailný pohľad na položku alebo zoznam.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Dáta sú ukladané na backende (kľudne vo forme json súboru). Prikladáme ukážkový json (súbor `data/data.json`),
+ak vám nevyhovuje, jeho štruktúru môžete zmeniť.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Backend a komunikáciu frontendu s backendom je možné riešiť ľubovoľnou technológiou.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Netreba riešiť žiadne prihlasovanie (predpokladáme, že db patrí jednému používateľovi a nikto iný k nej nemá prístup).
 
-## Learn More
+Štýlovanie dizajnu môže byť pomocou ľubovoľného frameworku, paradigmy a/alebo aj vlastného riešenia.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Ukážkové screenshoty
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+V adresári `screenshots` sú ukážkové screenshoty oboch stránok.
+
+## Tipy
+
+Riešenie netreba prekomplikovať a preinžinierovať, nemusí byť vodotesné a pripravené na každú situáciu a dokonca nemusí byť ani úplne funkčné.
+Zaujíma nás hlavne, ako nad vecami premýšľate.
+
+Ak niečo neviete naimplementovať, nie je na to čas alebo sa len zamýšľate, ako by to bolo vhodnejšie riešiť, kľudne k tomu napíšte komentár.
+
+
+
