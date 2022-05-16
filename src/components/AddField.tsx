@@ -13,11 +13,7 @@ export const AddField: React.FC<IAddFieldProps> = observer(({ onBlur }) => {
     <>
       <TextField
         variant="outlined"
-        inputProps={{
-          form: {
-            autocomplete: "off",
-          },
-        }}
+        autoComplete={"off"}
         style={{
           color: "rgb(0, 209,178)",
           fontWeight: "600",
@@ -25,6 +21,7 @@ export const AddField: React.FC<IAddFieldProps> = observer(({ onBlur }) => {
           height: "3.5em",
           width: "20em",
           margin: "0.4em",
+          borderRadius: "10px",
         }}
         value={name}
         onChange={(value) => {
